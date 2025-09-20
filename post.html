@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA LAB - The Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; background-color: #ffffff; color: #111; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Lato', sans-serif; font-weight: 900; }
+        .nav-link { transition: color 0.3s; }
+        .nav-link:hover { color: #888; }
+        .logo-svg { height: 50px; width: auto; }
+        .footer-logo-svg { height: 60px; width: auto; }
+        .post-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+            color: #374151; /* gray-700 */
+            font-size: 1.125rem; 
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <header class="sticky top-0 w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+             <a href="index.html" class="flex items-center">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="#111" stroke-width="1.5" fill="none"><circle cx="50" cy="35" r="24"/><path d="M42 25 l-2 -3"/><path d="M40 22 l-3 -2"/><path d="M58 25 l2 -3"/><path d="M60 22 l3 -2"/><path d="M38 58 c0,-10 24,-10 24,0"/><path d="M43 38 c2,-2 4,-2 6,0" stroke-linecap="round"/><path d="M57 38 c-2,-2 -4,-2 -6,0" stroke-linecap="round"/><path d="M50 42 c-2,1 -4,1 -4,3"/><path d="M50 49 c0,1 2,2 4,1.5"/></g><text x="50" y="78" font-family="Lato, sans-serif" font-weight="400" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.1em">AURA</text><text x="50" y="94" font-family="Lato, sans-serif" font-weight="700" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.4em">LAB</text></svg>
+            </a>
+            <div>
+                 <a href="index.html#blog-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">Back to Journal</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="post-container" class="container mx-auto px-6 py-12 max-w-3xl">
+            <p id="loading-message" class="text-center text-gray-500">Loading post...</p>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <div class="flex justify-center mb-4"><svg class="footer-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="#111" stroke-width="1.5" fill="none"><circle cx="50" cy="35" r="24"/><path d="M42 25 l-2 -3"/><path d="M40 22 l-3 -2"/><path d="M58 25 l2 -3"/><path d="M60 22 l3 -2"/><path d="M38 58 c0,-10 24,-10 24,0"/><path d="M43 38 c2,-2 4,-2 6,0" stroke-linecap="round"/><path d="M57 38 c-2,-2 -4,-2 -6,0" stroke-linecap="round"/><path d="M50 42 c-2,1 -4,1 -4,3"/><path d="M50 49 c0,1 2,2 4,1.5"/></g><text x="50" y="78" font-family="Lato, sans-serif" font-weight="400" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.1em">AURA</text><text x="50" y="94" font-family="Lato, sans-serif" font-weight="700" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.4em">LAB</text></svg></div>
+            <p class="mt-2 text-sm">&copy; 2025 Kiibati Elebute Design</p>
+        </div>
+    </footer>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // THIS IS THE CRITICAL FIX: 'doc' and 'getDoc' are now correctly imported.
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyBuAYMYU1nUeWXeSsX3hivNBYdEn7e6cF8",
+          authDomain: "aura-lab-cms.firebaseapp.com",
+          projectId: "aura-lab-cms",
+          storageBucket: "aura-lab-cms.appspot.com",
+          messagingSenderId: "698188665628",
+          appId: "1:698188665628:web:77d7ab0bbff2482b6d20d9"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadPost() {
+            const postContainer = document.getElementById('post-container');
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('id');
+
+            if (!postId) {
+                postContainer.innerHTML = '<p class="text-center text-red-500">Error: Post ID is missing from the URL.</p>';
+                return;
+            }
+
+            try {
+                const postRef = doc(db, 'posts', postId);
+                const postDoc = await getDoc(postRef);
+
+                if (postDoc.exists()) {
+                    const post = postDoc.data();
+                    document.title = `${post.title} - AURA LAB Journal`;
+                    const formattedContent = post.content.split('\n').map(p => `<p class="pb-4">${p}</p>`).join('');
+
+                    postContainer.innerHTML = `
+                        <h1 class="text-3xl md:text-4xl uppercase tracking-widest text-center">${post.title}</h1>
+                        <p class="text-center text-gray-500 text-sm mt-4">Published on ${post.timestamp ? new Date(post.timestamp.toDate()).toLocaleDateString() : 'N/A'}</p>
+                        <img src="${post.imageUrl || 'https://placehold.co/1200x600/e2e8f0/1f2937?text='}" alt="${post.title}" class="w-full h-auto max-h-96 object-cover rounded-lg my-8 shadow-lg">
+                        <div class="post-content">
+                            ${formattedContent}
+                        </div>
+                    `;
+                } else {
+                    postContainer.innerHTML = '<p class="text-center text-red-500">Sorry, this post could not be found. It may have been deleted.</p>';
+                }
+            } catch (error) {
+                console.error("Error loading post:", error);
+                postContainer.innerHTML = '<p class="text-center text-red-500">An error occurred while loading the post. Please check the browser console for details.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadPost);
+    </script>
+</body>
+</html>
+

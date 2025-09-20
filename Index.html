@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA LAB - Bespoke Skincare Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Lato', sans-serif; background-color: #ffffff; color: #111; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Lato', sans-serif; font-weight: 900; }
+        .nav-link { transition: color 0.3s; }
+        .nav-link:hover { color: #888; }
+        .primary-btn { 
+            background-color: #7C3AED; color: #ffffff; transition: background-color 0.3s ease-in-out;
+            text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
+        }
+        .primary-btn:hover { background-color: #6D28D9; }
+        .primary-btn:disabled { background-color: #a78bfa; cursor: not-allowed; }
+        .upload-card {
+            border: 2px dashed #d1d5db; transition: all 0.3s ease; background-color: #f9fafb;
+        }
+        .upload-card.filled {
+            border-color: #7C3AED; background-color: #f5f3ff;
+        }
+        .logo-svg { height: 50px; width: auto; }
+        .footer-logo-svg { height: 60px; width: auto; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .faq-arrow { transition: transform 0.3s; }
+        .faq-question.open .faq-arrow { transform: rotate(180deg); }
+        .modal-overlay { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <header class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+             <a href="#home-section" class="flex items-center">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="#111" stroke-width="1.5" fill="none"><circle cx="50" cy="35" r="24"/><path d="M42 25 l-2 -3"/><path d="M40 22 l-3 -2"/><path d="M58 25 l2 -3"/><path d="M60 22 l3 -2"/><path d="M38 58 c0,-10 24,-10 24,0"/><path d="M43 38 c2,-2 4,-2 6,0" stroke-linecap="round"/><path d="M57 38 c-2,-2 -4,-2 -6,0" stroke-linecap="round"/><path d="M50 42 c-2,1 -4,1 -4,3"/><path d="M50 49 c0,1 2,2 4,1.5"/></g><text x="50" y="78" font-family="Lato, sans-serif" font-weight="400" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.1em">AURA</text><text x="50" y="94" font-family="Lato, sans-serif" font-weight="700" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.4em">LAB</text></svg>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#how-it-works-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">How It Works</a>
+                <a href="#advisor-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">AI Advisor</a>
+                <a href="#ingredients-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">Ingredients</a>
+                <a href="#faq-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">FAQ</a>
+                <a href="#blog-section" class="nav-link text-gray-700 tracking-widest text-sm uppercase">Blog</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#how-it-works-section" class="mobile-nav-link block text-center py-3 text-sm uppercase tracking-widest text-gray-700 hover:bg-gray-100">How It Works</a>
+            <a href="#advisor-section" class="mobile-nav-link block text-center py-3 text-sm uppercase tracking-widest text-gray-700 hover:bg-gray-100">AI Advisor</a>
+            <a href="#ingredients-section" class="mobile-nav-link block text-center py-3 text-sm uppercase tracking-widest text-gray-700 hover:bg-gray-100">Ingredients</a>
+            <a href="#faq-section" class="mobile-nav-link block text-center py-3 text-sm uppercase tracking-widest text-gray-700 hover:bg-gray-100">FAQ</a>
+            <a href="#blog-section" class="mobile-nav-link block text-center py-3 text-sm uppercase tracking-widest text-gray-700 hover:bg-gray-100">Blog</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home-section" class="pt-24 min-h-screen flex items-center bg-gray-50">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <p class="text-sm uppercase tracking-widest text-violet-600 font-semibold">AI Powered Skincare</p>
+                    <h1 class="text-4xl md:text-5xl uppercase tracking-widest mt-2">Aura Skincare Analysis</h1>
+                    <p class="mt-6 text-base text-gray-600 max-w-lg mx-auto md:mx-0 leading-relaxed">Discover a skincare routine as unique as you are. Our advanced AI analyzes your skin to curate personalized recommendations.</p>
+                    <a href="#advisor-section" class="primary-btn inline-block mt-8 py-3 px-10 text-sm rounded-md">Begin Analysis</a>
+                </div>
+                 <div>
+                    <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full h-auto object-cover object-center" style="max-height: 70vh;">
+                        <source src="https://videos.pexels.com/video-files/3763029/3763029-hd_1920_1080_25fps.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works-section" class="py-24 bg-violet-50 relative overflow-hidden">
+            <div class="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 z-0 opacity-50 text-violet-100">
+                <svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M800 400C800 620.914 620.914 800 400 800C179.086 800 0 620.914 0 400C0 179.086 179.086 0 400 0C620.914 0 800 179.086 800 400Z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h2 class="text-3xl uppercase tracking-widest">Your Personalized Journey</h2>
+                <p class="mt-2 text-base text-gray-600">Unlock your perfect routine in three simple steps.</p>
+                <div class="mt-12 grid md:grid-cols-3 gap-10">
+                    <div class="text-center bg-white/50 backdrop-blur-sm p-6 rounded-lg">
+                        <div class="flex items-center justify-center h-20 w-20 mx-auto bg-violet-100 rounded-full">
+                           <svg class="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl uppercase tracking-wider font-bold">1. Snap & Upload</h3>
+                        <p class="mt-2 text-gray-600 text-sm leading-relaxed">Provide a clear, makeup-free photo of your face. Our AI works best with bright, even lighting.</p>
+                    </div>
+                    <div class="text-center bg-white/50 backdrop-blur-sm p-6 rounded-lg">
+                        <div class="flex items-center justify-center h-20 w-20 mx-auto bg-violet-100 rounded-full">
+                            <svg class="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl uppercase tracking-wider font-bold">2. AI Analysis</h3>
+                        <p class="mt-2 text-gray-600 text-sm leading-relaxed">Our proprietary technology analyzes your skin's unique characteristics, identifying key concerns and needs.</p>
+                    </div>
+                    <div class="text-center bg-white/50 backdrop-blur-sm p-6 rounded-lg">
+                        <div class="flex items-center justify-center h-20 w-20 mx-auto bg-violet-100 rounded-full">
+                           <svg class="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="mt-6 text-xl uppercase tracking-wider font-bold">3. Unlock Your Routine</h3>
+                        <p class="mt-2 text-gray-600 text-sm leading-relaxed">Receive a personalized list of product types and key ingredients tailored to help you achieve your skin goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="advisor-section" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6 flex flex-col items-center justify-center">
+                 <div id="start-screen" class="w-full max-w-4xl text-center fade-in">
+                    <h2 class="text-3xl uppercase tracking-widest">The Holistic AI Advisor</h2>
+                    <p class="mt-4 text-base text-gray-600 leading-relaxed">For a complete 360° analysis, please provide three clear, makeup-free photos.</p>
+                    <div class="mt-8 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <label for="front-upload" id="front-card" class="upload-card cursor-pointer rounded-lg p-6 flex flex-col items-center justify-center h-48">
+                                <img id="front-preview" class="hidden w-24 h-24 rounded-full object-cover mb-4" />
+                                <div id="front-placeholder" class="text-center">
+                                    <svg class="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                                    <h3 class="mt-4 font-bold tracking-wider uppercase">Front View</h3>
+                                </div>
+                                <span id="front-check" class="hidden mt-4 text-violet-600 font-bold">✓ Uploaded</span>
+                            </label>
+                            <label for="left-upload" id="left-card" class="upload-card cursor-pointer rounded-lg p-6 flex flex-col items-center justify-center h-48">
+                                <img id="left-preview" class="hidden w-24 h-24 rounded-full object-cover mb-4" />
+                                <div id="left-placeholder" class="text-center">
+                                     <svg class="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                                    <h3 class="mt-4 font-bold tracking-wider uppercase">Left Side</h3>
+                                </div>
+                                <span id="left-check" class="hidden mt-4 text-violet-600 font-bold">✓ Uploaded</span>
+                            </label>
+                            <label for="right-upload" id="right-card" class="upload-card cursor-pointer rounded-lg p-6 flex flex-col items-center justify-center h-48">
+                                <img id="right-preview" class="hidden w-24 h-24 rounded-full object-cover mb-4" />
+                                <div id="right-placeholder" class="text-center">
+                                     <svg class="w-10 h-10 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                                    <h3 class="mt-4 font-bold tracking-wider uppercase">Right Side</h3>
+                                </div>
+                                <span id="right-check" class="hidden mt-4 text-violet-600 font-bold">✓ Uploaded</span>
+                            </label>
+                        </div>
+                        <input type="file" id="front-upload" class="hidden" accept="image/*"><input type="file" id="left-upload" class="hidden" accept="image/*"><input type="file" id="right-upload" class="hidden" accept="image/*">
+                        <div class="mt-6 text-center">
+                             <button id="analyze-btn" class="primary-btn py-3 px-10 text-sm rounded-md" disabled>Analyze My Skin</button>
+                        </div>
+                         <div class="mt-4 flex items-center justify-center text-xs text-gray-500">
+                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                             <span>Your privacy is our priority. Images are never stored on our servers.</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading-screen" class="w-full max-w-lg text-center hidden"><svg class="animate-spin h-8 w-8 text-violet-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><h2 class="text-2xl uppercase tracking-widest mt-6">Analyzing...</h2></div>
+                <div id="results-screen" class="w-full max-w-5xl hidden fade-in">
+                    <div class="text-center"><h2 class="text-3xl uppercase tracking-widest">Your Personal Analysis</h2><p class="mt-2 text-base text-gray-600">Based on your photos, here is your holistic wellness plan.</p></div>
+                    <div class="mt-10 bg-white border border-gray-200 p-8 rounded-lg"><h3 class="text-xl uppercase tracking-wider font-bold">Key Skin Concerns</h3><div id="analysis-tags" class="mt-4 flex flex-wrap gap-3"></div></div>
+                    <div id="holistic-advice-section" class="mt-8"></div>
+                    <div id="product-recommendations" class="mt-8"><h3 class="text-xl uppercase tracking-wider font-bold text-center mb-8">Recommended Ritual</h3><div id="product-list" class="space-y-6"></div></div>
+                    <div class="mt-12 text-center"><button id="start-over-btn" class="outline-btn py-3 px-10 text-sm rounded-md">Start Over</button></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="ingredients-section" class="py-24 bg-violet-50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl uppercase tracking-widest">The Science of Skin</h2>
+                <p class="mt-2 text-base text-gray-600">Learn more about the powerhouse ingredients our AI may recommend.</p>
+                <div class="mt-12 grid md:grid-cols-3 gap-8 text-left">
+                    <div class="border border-gray-200 bg-white rounded-lg overflow-hidden group">
+                        <img src="https://i.postimg.cc/Hnr7nD3J/c617f3fedd5253ce2c83431c680a2930.jpg" alt="Hyaluronic Acid serum" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl uppercase tracking-wider font-bold text-violet-600">Hyaluronic Acid</h3>
+                            <p class="mt-2 text-gray-600 text-sm leading-relaxed">A hydration superstar, this molecule can hold up to 1000 times its weight in water. It draws moisture into the skin, providing a plump, dewy look that's beneficial for all skin types.</p>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 bg-white rounded-lg overflow-hidden group">
+                         <img src="https://i.postimg.cc/dQfyX3tG/419c6bd43c0fb3712d4f72352fb185ed.jpg" alt="Vitamin C serum" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl uppercase tracking-wider font-bold text-violet-600">Vitamin C</h3>
+                            <p class="mt-2 text-gray-600 text-sm leading-relaxed">A potent antioxidant that protects skin from environmental stressors. It's renowned for its ability to brighten the complexion, fade dark spots, and boost collagen production for firmer skin.</p>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 bg-white rounded-lg overflow-hidden group">
+                        <img src="https://i.postimg.cc/kg3tJHS4/75e97903342795aa172db7e61bcda5d9.jpg" alt="Niacinamide serum" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl uppercase tracking-wider font-bold text-violet-600">Niacinamide</h3>
+                            <p class="mt-2 text-gray-600 text-sm leading-relaxed">Also known as Vitamin B3, this versatile ingredient is a true multi-tasker. It helps minimize the appearance of pores, controls oil, soothes redness, and improves the skin's barrier function.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials-section" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl uppercase tracking-widest">The Receipts</h2>
+                <p class="mt-2 text-base text-gray-600">Proof from the AURA LAB community.</p>
+                <div class="mt-12 grid md:grid-cols-2 gap-8 text-left">
+                    <div class="bg-white p-8 rounded-lg border border-violet-200">
+                        <p class="text-gray-700 italic">"I've spent a fortune on products that didn't work. The AI analysis was shockingly accurate and recommended ingredients that have actually made a difference. My skin has never felt better."</p>
+                        <p class="mt-4 font-bold tracking-wider uppercase text-sm text-violet-600">- Chloe R., Toronto</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg border border-violet-200">
+                        <p class="text-gray-700 italic">"As someone with combination skin, finding the right balance is impossible. AURA LAB nailed it. The recommendations for my oily T-zone and dry cheeks were spot on. This is a game-changer."</p>
+                        <p class="mt-4 font-bold tracking-wider uppercase text-sm text-violet-600">- Ben A., Vancouver</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="faq-section" class="py-24 bg-violet-50">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center">
+                    <h2 class="text-3xl uppercase tracking-widest">Questions? We Have Answers.</h2>
+                    <p class="mt-2 text-base text-gray-600">Everything you need to know about AURA LAB.</p>
+                </div>
+                <div class="mt-12 space-y-4">
+                    <div class="border border-gray-200 bg-white rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                            <span class="font-bold text-lg">How does the AI analysis work?</span>
+                            <svg class="faq-arrow w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden p-6 pt-0 text-gray-600 text-sm leading-relaxed">
+                            Our system uses a sophisticated Large Vision Model (LVM) trained on a vast dataset of dermatological images. When you upload your photos, the AI analyzes patterns, textures, and tones to identify key characteristics like hydration levels, oil production, and pigmentation. It then cross-references these findings with a database of cosmetic science to recommend the most effective ingredient types and lifestyle adjustments for you.
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 bg-white rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                            <span class="font-bold text-lg">Are my photos and data stored?</span>
+                            <svg class="faq-arrow w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden p-6 pt-0 text-gray-600 text-sm leading-relaxed">
+                           Absolutely not. Your privacy is paramount. Your photos are sent securely for analysis and are immediately deleted after the process is complete. We do not store your images on our servers or use them for any other purpose. The analysis results are processed in real-time and are not linked to any personal identifiable information.
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 bg-white rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                            <span class="font-bold text-lg">Is this medical advice?</span>
+                            <svg class="faq-arrow w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden p-6 pt-0 text-gray-600 text-sm leading-relaxed">
+                            No. AURA LAB is an educational tool designed to provide personalized skincare and wellness recommendations. It is not a substitute for professional medical advice, diagnosis, or treatment. For any medical skin conditions, such as severe acne, rosacea, or suspicious moles, please consult a qualified dermatologist.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog-section" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                    <h2 class="text-3xl uppercase tracking-widest">The Journal</h2>
+                    <p class="mt-2 text-base text-gray-600">Insights on skincare, wellness, and the science of beauty.</p>
+                </div>
+                <div id="blog-posts-container" class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <p id="blog-loading-message" class="col-span-full text-center text-gray-500">Loading latest articles...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <div class="flex justify-center mb-4"><svg class="footer-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="#111" stroke-width="1.5" fill="none"><circle cx="50" cy="35" r="24"/><path d="M42 25 l-2 -3"/><path d="M40 22 l-3 -2"/><path d="M58 25 l2 -3"/><path d="M60 22 l3 -2"/><path d="M38 58 c0,-10 24,-10 24,0"/><path d="M43 38 c2,-2 4,-2 6,0" stroke-linecap="round"/><path d="M57 38 c-2,-2 -4,-2 -6,0" stroke-linecap="round"/><path d="M50 42 c-2,1 -4,1 -4,3"/><path d="M50 49 c0,1 2,2 4,1.5"/></g><text x="50" y="78" font-family="Lato, sans-serif" font-weight="400" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.1em">AURA</text><text x="50" y="94" font-family="Lato, sans-serif" font-weight="700" font-size="14" text-anchor="middle" fill="#111" letter-spacing="0.4em">LAB</text></svg></div>
+            <p class="mt-2 text-sm">&copy; 2025 Kiibati Elebute Design</p>
+        </div>
+    </footer>
+    
+    <div id="error-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[100] opacity-0 pointer-events-none">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full text-center">
+            <h3 class="text-xl font-bold text-red-600">Analysis Failed</h3>
+            <p id="error-message" class="text-gray-600 mt-2 text-sm">An unexpected error occurred. This could be due to a network issue or a problem with the AI service. Please try again shortly.</p>
+            <button id="close-error-modal-btn" class="mt-6 w-full primary-btn py-2 px-4 text-sm rounded-md bg-red-500 hover:bg-red-600">
+                OK
+            </button>
+        </div>
+    </div>
+    
+    <!-- This new config script must be loaded BEFORE main.js -->
+    <script src="/config.js"></script>
+    <script type="module" src="/main.js"></script>
+
+</body>
+</html>
+
